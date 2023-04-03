@@ -4,10 +4,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
-  Routes, 
-  Route, 
-  Link, 
-  useSearchParams
+  Route
 } from "react-router-dom"
 import Home from "./pages/Home"
 import About from "./pages/About"
