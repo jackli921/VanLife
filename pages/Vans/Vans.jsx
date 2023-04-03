@@ -6,7 +6,6 @@ export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
 
     const typeFilter = searchParams.get("type")
-    console.log(typeFilter) 
     
     React.useEffect(() => {
         fetch("/api/vans")
@@ -31,14 +30,61 @@ export default function Vans() {
         </div>
     ))
 
+    function genNewSearchParamString(key, value){
+        const sp = new URLSearchParams(searchParams)
+        if (value === null){
+            sp.delete(key)
+        }else {
+            sp.set(key, value)
+        }
+        return `?${sp.toString()}`
+    }   
+
+    function handleFilterChange(key, value){
+        setSearchParams(prevParams => {
+            if(value === null){
+                prevParams.delete(key)
+            }else{
+                prevParams.set(key, value)
+            }
+            return prevParams
+        })
+    }
+
+
     return (
       <div className="van-list-container">
         <h1>Explore our van options</h1>
-        
-        <button onClick={()=> setSearchParams({type:"simple"})}>Simple</button>
-        <button onClick={()=> setSearchParams({type:"luxury"})}>Luxury</button>
-        <button onClick={()=> setSearchParams({type:"rugged"})}>Rugged</button>
-        <button onClick={()=> setSearchParams("")}>Clear Filter</button>
+
+        <button
+          className="van-type simple"
+          onClick={() => handleFilterChange("type", "simple")}
+        >
+          Simple
+        </button>
+        <button
+          className="van-type luxury"
+          onClick={() => handleFilterChange("type", "luxury")}
+        >
+          Luxury
+        </button>
+        <button
+          className="van-type rugged"
+          onClick={() => handleFilterChange("type", "rugged")}
+        >
+          Rugged
+        </button>
+
+        {typeFilter ? (
+          <button
+            className="van-type clear-filters"
+            onClick={() => handleFilterChange("type", null)}
+          >
+            Clear Filter
+          </button>
+        ) : (
+          null
+        )}
 
         <div className="van-list">{vanElements}</div>
       </div>
