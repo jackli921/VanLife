@@ -14,9 +14,11 @@ export default function Vans() {
             .then(data => setVans(data.vans))
     }, [])
 
-    const currentVans = typeFilter ? vans.filter(van => van.type === typeFilter) : vans;
+    const displayVans = typeFilter 
+        ? vans.filter(van => van.type === typeFilter) 
+        : vans;
 
-    const vanElements = currentVans.map(van => (
+    const vanElements = displayVans.map(van => (
         <div key={van.id} className="van-tile">
             <Link to={`/vans/${van.id}`}>
                 <img src={van.imageUrl} />
@@ -30,11 +32,15 @@ export default function Vans() {
     ))
 
     return (
-        <div className="van-list-container">
-            <h1>Explore our van options</h1>
-            <div className="van-list">
-                {vanElements}
-            </div>
-        </div>
-    )
+      <div className="van-list-container">
+        <h1>Explore our van options</h1>
+        
+        <button onClick={()=> setSearchParams({type:"simple"})}>Simple</button>
+        <button onClick={()=> setSearchParams({type:"luxury"})}>Luxury</button>
+        <button onClick={()=> setSearchParams({type:"rugged"})}>Rugged</button>
+        <button onClick={()=> setSearchParams("")}>Clear Filter</button>
+
+        <div className="van-list">{vanElements}</div>
+      </div>
+    );
 }
