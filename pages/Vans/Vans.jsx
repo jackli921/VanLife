@@ -57,19 +57,25 @@ export default function Vans() {
         <h1>Explore our van options</h1>
 
         <button
-          className="van-type simple"
+          className={`van-type simple ${
+            typeFilter === "simple" ? "selected" : ""
+          }`}
           onClick={() => handleFilterChange("type", "simple")}
         >
           Simple
         </button>
         <button
-          className="van-type luxury"
+          className={`van-type luxury ${
+            typeFilter === "luxury" ? "selected" : ""
+          }`}
           onClick={() => handleFilterChange("type", "luxury")}
         >
           Luxury
         </button>
         <button
-          className="van-type rugged"
+          className={`van-type rugged ${
+            typeFilter === "rugged" ? "selected" : ""
+          }`}
           onClick={() => handleFilterChange("type", "rugged")}
         >
           Rugged
@@ -82,9 +88,7 @@ export default function Vans() {
           >
             Clear Filter
           </button>
-        ) : (
-          null
-        )}
+        ) : null}
 
         <div className="van-list">{vanElements}</div>
       </div>
